@@ -31,11 +31,16 @@ class _LoginScreenState extends State<LoginScreen>{
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Image.asset(
+                'assets/images/Finance-Wallet-icon.png',
+                height: 150,
+                fit:BoxFit.fill,
+              ),
               const Text(
                 "MyLittleWallet",
                 style: TextStyle(
                   fontSize: 50,
-                  fontWeight: FontWeight.w900,
+                  fontWeight: FontWeight.w300,
                   color: Colors.teal,
                 ),
               ),
@@ -99,6 +104,7 @@ class _LoginScreenState extends State<LoginScreen>{
                     "LOGIN",
                     style: TextStyle(
                       fontSize: 25,
+                      fontWeight: FontWeight.w300,
                       color: Colors.white,
                     ),
                   ),

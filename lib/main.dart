@@ -15,12 +15,6 @@ class LoginUI extends StatelessWidget {
         primarySwatch: Colors.teal,
       ),
       home: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(
-            "Login Screen",
-          ),
-        ),
         body: const LoginScreen(),
       ),
     );
