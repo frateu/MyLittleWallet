@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mylittlewallet/data/globals.dart' as globals;
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -12,6 +13,10 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
 
   var moneyController = TextEditingController();
+
+  String allMoney      = globals.allMoney.toString();
+  String receitaValue  = globals.allReceita.toString();
+  String despesaValue  = globals.allDespesa.toString();
 
   @override
   Widget build(BuildContext context) {
@@ -40,30 +45,49 @@ class _DashboardScreenState extends State<DashboardScreen> {
         alignment: Alignment.center,
         child: Column(
             children: [
-              TextFormField(
-                controller: moneyController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: "Money Test",
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.monetization_on),
+              const SizedBox(
+                height: 15,
+              ),
+              const Text(
+                "Saldo Atual",
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.teal,
                 ),
               ),
-              TextButton(
-                style: ButtonStyle(
-                  overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                          (Set<MaterialState> states) {
-                        if (states.contains(MaterialState.focused))
-                          return Colors.red;
-                        return null; // Defer to the widget's default.
-                      }
-                  ),
+              Text(
+                "R\$$allMoney",
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.teal,
                 ),
-                onPressed: () {
-
-                },
-                child: Text('Make it rain'),
-              )
+              ),
+              const SizedBox(
+                height: 105,
+              ),
+              Text(
+                "Receita: R\$$receitaValue",
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.teal,
+                ),
+                textAlign: TextAlign.left,
+              ),
+              const SizedBox(
+                height: 60,
+              ),
+              Text(
+                "Despesa: R\$$despesaValue",
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.teal,
+                ),
+                textAlign: TextAlign.left,
+              ),
             ]
         ),
       ),
