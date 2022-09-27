@@ -44,51 +44,90 @@ class _DashboardScreenState extends State<DashboardScreen> {
         padding: const EdgeInsets.all(0.0),
         alignment: Alignment.center,
         child: Column(
-            children: [
-              const SizedBox(
-                height: 15,
+          children: [
+            const SizedBox(
+              height: 15,
+            ),
+            const Text(
+              "Saldo Atual",
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w300,
+                color: Colors.teal,
               ),
-              const Text(
-                "Saldo Atual",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w300,
-                  color: Colors.teal,
-                ),
+            ),
+            Text(
+              "R\$$allMoney",
+              style: const TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w300,
+                color: Colors.teal,
               ),
-              Text(
-                "R\$$allMoney",
-                style: const TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w300,
-                  color: Colors.teal,
-                ),
+            ),
+            const SizedBox(
+              height: 105,
+            ),
+            Container(
+              padding: const EdgeInsets.all(50.0),
+              alignment: Alignment.centerLeft,
+              child: Column(
+                children: [
+                  Text(
+                    "Receita: R\$$receitaValue",
+                    style: const TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.teal,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                  const SizedBox(
+                    height: 60,
+                  ),
+                  Text(
+                    "Despesa: R\$$despesaValue",
+                    style: const TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.teal,
+                    ),
+                    textAlign: TextAlign.left,
+                  ),
+                ],
               ),
-              const SizedBox(
-                height: 105,
+            ),
+            Container(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: () {
+                    },
+                    icon: const Icon(
+                        Icons.add_circle,
+                        size: 18
+                    ),
+                    label: Text("Receita"),
+                    style: const ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.green),
+                    ),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                    },
+                    icon: const Icon(
+                        Icons.add_circle,
+                        size: 18
+                    ),
+                    label: Text("Despesa"),
+                    style: const ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll<Color>(Colors.red),
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                "Receita: R\$$receitaValue",
-                style: const TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w300,
-                  color: Colors.teal,
-                ),
-                textAlign: TextAlign.left,
-              ),
-              const SizedBox(
-                height: 60,
-              ),
-              Text(
-                "Despesa: R\$$despesaValue",
-                style: const TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w300,
-                  color: Colors.teal,
-                ),
-                textAlign: TextAlign.left,
-              ),
-            ]
+            ),
+          ],
         ),
       ),
     );
