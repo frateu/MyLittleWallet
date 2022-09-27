@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen>{
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
-                  labelText: "Enter email",
+                  labelText: "Insira o Email",
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.email),
                 ),
@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen>{
                 keyboardType: TextInputType.visiblePassword,
                 obscureText: true,
                 decoration: const InputDecoration(
-                  labelText: "Enter Password",
+                  labelText: "Insira a Senha",
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.lock),
                   suffixIcon: Icon(Icons.remove_red_eye),
@@ -78,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen>{
                 children: [
                   TextButton(onPressed: (){},
                       child: const Text(
-                      "Forget Password?"
+                      "Esqueceu a Senha?"
                   ))
                 ],
               ),
@@ -129,14 +129,14 @@ class _LoginScreenState extends State<LoginScreen>{
                 mainAxisAlignment:  MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Don't have an Account?",
+                    "Não tem uma conta?",
                     style: TextStyle(
                       color: Colors.black.withOpacity(0.7),
                     ),
 
                   ),
                   TextButton(onPressed: (){}, child: const Text(
-                      "Register Account"
+                      "Registrar Conta"
                   ))
                 ],
               ),

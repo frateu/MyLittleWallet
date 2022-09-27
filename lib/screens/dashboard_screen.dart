@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mylittlewallet/data/globals.dart' as globals;
+import 'package:mylittlewallet/screens/receita_screen.dart';
+import 'package:mylittlewallet/screens/despesa_screen.dart';
+import 'package:mylittlewallet/screens/detail_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -41,7 +44,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       body:
       Container(
-        padding: const EdgeInsets.all(0.0),
+        padding: const EdgeInsets.all(30),
         alignment: Alignment.center,
         child: Column(
           children: [
@@ -65,7 +68,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
             const SizedBox(
-              height: 105,
+              height: 50,
             ),
             Container(
               padding: const EdgeInsets.all(50.0),
@@ -77,31 +80,78 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.w300,
-                      color: Colors.teal,
+                      color: Colors.green,
                     ),
                     textAlign: TextAlign.left,
                   ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailScreen(type: "receita"),
+                        ),
+                      );
+                    },
+                    icon: const Icon(
+                        Icons.account_tree,
+                        size: 18
+                    ),
+                    label: Text("Detalhes"),
+                    style: const ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.green)
+                    ),
+                  ),
                   const SizedBox(
-                    height: 60,
+                    height: 40,
                   ),
                   Text(
                     "Despesa: R\$$despesaValue",
                     style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.w300,
-                      color: Colors.teal,
+                      color: Colors.red,
                     ),
                     textAlign: TextAlign.left,
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailScreen(type: "despesa"),
+                        ),
+                      );
+                    },
+                    icon: const Icon(
+                        Icons.account_tree,
+                        size: 18
+                    ),
+                    label: Text("Detalhes"),
+                    style: const ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.red)
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
                   ),
                 ],
               ),
             ),
             Container(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
+              padding: const EdgeInsets.all(0.0),
+              alignment: Alignment.center,
+              child: Row(
                 children: [
+                  const SizedBox(
+                    width: 40,
+                  ),
                   ElevatedButton.icon(
                     onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const ReceitaScreen()),
+                      );
                     },
                     icon: const Icon(
                         Icons.add_circle,
@@ -109,11 +159,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                     label: Text("Receita"),
                     style: const ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.green),
+                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.green)
                     ),
+                  ),
+                  const SizedBox(
+                    width: 40,
                   ),
                   ElevatedButton.icon(
                     onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const DespesaScreen()),
+                      );
                     },
                     icon: const Icon(
                         Icons.add_circle,
@@ -121,7 +178,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                     label: Text("Despesa"),
                     style: const ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll<Color>(Colors.red),
+                      backgroundColor: MaterialStatePropertyAll<Color>(Colors.red)
                     ),
                   ),
                 ],
