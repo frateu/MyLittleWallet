@@ -21,6 +21,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String receitaValue  = globals.allReceita.toString();
   String despesaValue  = globals.allDespesa.toString();
 
+  Color corSaldo = globals.moneyColor;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,31 +50,55 @@ class _DashboardScreenState extends State<DashboardScreen> {
         alignment: Alignment.center,
         child: Column(
           children: [
+            // SizedBox como espaço
             const SizedBox(
               height: 15,
             ),
-            const Text(
-              "Saldo Atual",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.w300,
-                color: Colors.teal,
+            Container(
+              // cor para teste, será aplicada variavel com coloração a partir do saldo
+              height: 150,
+              width: 300,
+              decoration: BoxDecoration(
+                color: corSaldo,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                children: [
+                  // SizedBox como espaço
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  const Text(
+                    "Saldo Atual",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.white,
+                    ),
+                  ),
+                  // SizedBox como espaço
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Text(
+                    "R\$$allMoney",
+                    style: const TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
             ),
-            Text(
-              "R\$$allMoney",
-              style: const TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.w300,
-                color: Colors.teal,
-              ),
-            ),
+            // SizedBox como espaço
             const SizedBox(
               height: 50,
             ),
             Container(
               padding: const EdgeInsets.all(50.0),
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
               child: Column(
                 children: [
                   Text(
@@ -97,11 +123,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         Icons.account_tree,
                         size: 18
                     ),
-                    label: Text("Detalhes"),
+                    label: const Text("Detalhes"),
                     style: const ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll<Color>(Colors.green)
                     ),
                   ),
+                  // SizedBox como espaço
                   const SizedBox(
                     height: 40,
                   ),
@@ -127,11 +154,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         Icons.account_tree,
                         size: 18
                     ),
-                    label: Text("Detalhes"),
+                    label: const Text("Detalhes"),
                     style: const ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll<Color>(Colors.red)
                     ),
                   ),
+                  // SizedBox como espaço
                   const SizedBox(
                     height: 30,
                   ),
@@ -157,7 +185,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         Icons.add_circle,
                         size: 18
                     ),
-                    label: Text("Receita"),
+                    label: const Text("Receita"),
                     style: const ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll<Color>(Colors.green)
                     ),
@@ -176,7 +204,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         Icons.add_circle,
                         size: 18
                     ),
-                    label: Text("Despesa"),
+                    label: const Text("Despesa"),
                     style: const ButtonStyle(
                       backgroundColor: MaterialStatePropertyAll<Color>(Colors.red)
                     ),

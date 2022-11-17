@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "643397513249",
+    "project_id": "mylittlewallet-8b471",
+    "storage_bucket": "mylittlewallet-8b471.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:643397513249:android:cbb612ece3fd531b1c3360",
+        "android_client_info": {
+          "package_name": "br.mylittleponey.mylittlewallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "643397513249-eg9p72mlt7f20ia956bikhadkn39sr4d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXheyhZxGQmAME6qzHA6Z2d-I-2CZZJ2Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "643397513249-eg9p72mlt7f20ia956bikhadkn39sr4d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

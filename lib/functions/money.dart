@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:mylittlewallet/data/globals.dart' as globals;
 
 void addMoney(String descMoney, String valueMoney){
@@ -9,6 +10,12 @@ void addMoney(String descMoney, String valueMoney){
 
   globals.lancamentosReceita.add(globals.Lancamento(desc: descMoney, value: money));
 
+  if (globals.allMoney < 0) {
+    globals.moneyColor = Colors.red;
+  } else {
+    globals.moneyColor = Colors.green;
+  }
+
 }
 
 void removeMoney(String descMoney, String valueMoney){
@@ -19,5 +26,11 @@ void removeMoney(String descMoney, String valueMoney){
   globals.allDespesa = globals.allDespesa + money;
 
   globals.lancamentosDespesa.add(globals.Lancamento(desc: descMoney, value: money));
+
+  if (globals.allMoney < 0) {
+    globals.moneyColor = Colors.red;
+  } else {
+    globals.moneyColor = Colors.green;
+  }
 
 }

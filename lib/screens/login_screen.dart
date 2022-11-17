@@ -1,14 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mylittlewallet/screens/dashboard_screen.dart';
-import 'package:mylittlewallet/functions/authenticator.dart';
 
 class LoginScreen extends StatefulWidget{
-  const LoginScreen({super.key});
 
-  @override
-  State<StatefulWidget> createState(){
-    return _LoginScreenState();
-  }
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen>{
@@ -93,14 +88,7 @@ class _LoginScreenState extends State<LoginScreen>{
                   gradient: const LinearGradient(colors: [Colors.blue, Colors.green]),
                 ),
                 child: MaterialButton(
-                  onPressed: (){
-                    if (authenticator(emailController.text, passwordController.text)) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const DashboardScreen()),
-                      );
-                    }
-                  },
+                  onPressed: singIn,
                   child: const Text(
                     "LOGIN",
                     style: TextStyle(
@@ -146,4 +134,12 @@ class _LoginScreenState extends State<LoginScreen>{
       ),
     );
   }
+
+  Future singIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+    );
+  }
+
 }
