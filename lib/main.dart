@@ -18,13 +18,13 @@ class MyLittleWallet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-    debugShowCheckedModeBanner: false,
-    title: title,
-    theme: ThemeData(
-      primarySwatch: Colors.teal,
-    ),
-    home: const MainPage(),
-  );
+        debugShowCheckedModeBanner: false,
+        title: title,
+        theme: ThemeData(
+          primarySwatch: Colors.teal,
+        ),
+        home: const MainPage(),
+      );
 }
 
 class MainPage extends StatelessWidget {
@@ -32,15 +32,15 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    body: StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return const DashboardScreen();
-        } else {
-          return LoginScreen();
-        }
-      },
-    ),
-  );
+        body: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return const DashboardScreen();
+            } else {
+              return const LoginScreen();
+            }
+          },
+        ),
+      );
 }

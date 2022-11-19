@@ -1,18 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mylittlewallet/screens/dashboard_screen.dart';
-import 'package:mylittlewallet/screens/register_screen.dart';
+import 'package:mylittlewallet/screens/login_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
   State<StatefulWidget> createState() {
-    return _LoginScreenState();
+    return _RegisterScreenState();
   }
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -72,18 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                        onPressed: () {},
-                        child: const Text("Esqueceu a Senha?"))
-                  ],
-                ),
-                const SizedBox(
-                  height: 25,
+                  height: 30,
                 ),
                 Container(
                   height: 60,
@@ -95,10 +83,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   child: MaterialButton(
                     onPressed: () {
-                      singIn();
+                      singUp();
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => const LoginScreen()));
                     },
                     child: const Text(
-                      "LOGIN",
+                      "REGISTER",
                       style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w300,
@@ -106,38 +96,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Divider(
-                  height: 30,
-                  color: Colors.black,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Não tem uma conta?",
-                      style: TextStyle(
-                        color: Colors.black.withOpacity(0.7),
-                      ),
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const RegisterScreen()));
-                        },
-                        child: const Text("Registrar Conta"))
-                  ],
                 ),
               ],
             ),
@@ -147,17 +105,10 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future singIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
+  Future singUp() async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: emailController.text.trim(),
       password: passwordController.text.trim(),
     );
-
-    String? userUID = FirebaseAuth.instance.currentUser?.uid;
-
-    if (userUID != null) {
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const DashboardScreen()));
-    }
   }
 }

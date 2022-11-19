@@ -11,9 +11,8 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     if (type == "receita") {
-      for (int i = 0; i < globals.lancamentosReceita.length; i++){
+      for (int i = 0; i < globals.lancamentosReceita.length; i++) {
         String desc = globals.lancamentosReceita[i].desc;
         double value = globals.lancamentosReceita[i].value;
 
@@ -21,28 +20,25 @@ class DetailScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(30),
             alignment: Alignment.center,
-            child:
-            Column(
-              children: [
-                Text(
-                  "$desc: R\$$value",
-                  style: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.green,
-                  ),
-                  textAlign: TextAlign.left,
+            child: Column(children: [
+              Text(
+                "$desc: R\$$value",
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.green,
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
-              ]
-            ),
+                textAlign: TextAlign.left,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+            ]),
           ),
         );
       }
     } else {
-      for (int i = 0; i < globals.lancamentosDespesa.length; i++){
+      for (int i = 0; i < globals.lancamentosDespesa.length; i++) {
         String desc = globals.lancamentosDespesa[i].desc;
         double value = globals.lancamentosDespesa[i].value;
 
@@ -50,23 +46,20 @@ class DetailScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(30),
             alignment: Alignment.center,
-            child:
-            Column(
-                children: [
-                  Text(
-                    "$desc: R\$$value",
-                    style: const TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w300,
-                      color: Colors.red,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                ]
-            ),
+            child: Column(children: [
+              Text(
+                "$desc: R\$$value",
+                style: const TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w300,
+                  color: Colors.red,
+                ),
+                textAlign: TextAlign.left,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+            ]),
           ),
         );
       }
@@ -75,7 +68,7 @@ class DetailScreen extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async {
         return shouldPop;
-        },
+      },
       child: Scaffold(
         appBar: AppBar(
           title: const Text(

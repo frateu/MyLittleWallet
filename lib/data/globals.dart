@@ -1,7 +1,5 @@
 library globals;
 
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class Lancamento {
@@ -11,7 +9,6 @@ class Lancamento {
   Lancamento({required this.desc, required this.value});
 }
 
-double allMoney    = 0;
 double allReceita  = 0;
 double allDespesa  = 0;
 
