@@ -68,12 +68,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
         leading: IconButton(
           onPressed: () {
             singOut();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const LoginScreen(),
-              ),
-            );
+            Navigator.pushAndRemoveUntil(context,
+                MaterialPageRoute(builder: (BuildContext context) {
+              return const LoginScreen();
+            }), (r) {
+              return false;
+            });
           },
           icon: const Icon(
             Icons.exit_to_app,
@@ -93,6 +93,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
               decoration: BoxDecoration(
                 color: corSaldo,
                 borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3), // changes position of shadow
+                  ),
+                ],
               ),
               child: Column(
                 children: [
