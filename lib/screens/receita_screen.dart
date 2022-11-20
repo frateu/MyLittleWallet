@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mylittlewallet/screens/dashboard_screen.dart';
-import 'package:mylittlewallet/functions/money.dart';
 
 class ReceitaScreen extends StatefulWidget {
-  const ReceitaScreen({super.key});
+  ReceitaScreen({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -12,104 +13,128 @@ class ReceitaScreen extends StatefulWidget {
 }
 
 class _ReceitaScreenState extends State<ReceitaScreen> {
-
-  final descController   = TextEditingController();
-  final valueController  = TextEditingController();
+  final user = FirebaseAuth.instance.currentUser;
+  final descController = TextEditingController();
+  final valueController = TextEditingController();
   bool shouldPop = true;
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () async {
-      return shouldPop;
-    },
-    child: Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'MyLittleWallet',
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.w300,
-            color: Colors.black,
+      onWillPop: () async {
+        return shouldPop;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'MyLittleWallet',
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.w300,
+              color: Colors.black,
+            ),
           ),
+          centerTitle: true,
         ),
-        centerTitle: true,
-      ),
-      body:
-      Container(
-        padding: const EdgeInsets.all(30),
-        alignment: Alignment.center,
-        child: Column(
-            children: [
-              const SizedBox(
-                height: 15,
+        body: Container(
+          padding: const EdgeInsets.all(30),
+          alignment: Alignment.center,
+          child: Column(children: [
+            const SizedBox(
+              height: 15,
+            ),
+            const Text(
+              "Receita",
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w300,
+                color: Colors.green,
               ),
-              const Text(
-                "Receita",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w300,
-                  color: Colors.green,
-                ),
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            TextFormField(
+              controller: descController,
+              keyboardType: TextInputType.name,
+              decoration: const InputDecoration(
+                labelText: "Nome da Receita",
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.abc),
               ),
-              const SizedBox(
-                height: 25,
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            TextFormField(
+              controller: valueController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: "Valor da Receita",
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.add_chart),
               ),
-              TextFormField(
-                controller: descController,
-                keyboardType: TextInputType.name,
-                decoration: const InputDecoration(
-                  labelText: "Nome da Receita",
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.abc),
-                ),
+            ),
+            const SizedBox(
+              height: 75,
+            ),
+            Container(
+              height: 60,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(100),
+                gradient:
+                    const LinearGradient(colors: [Colors.blue, Colors.green]),
               ),
-              const SizedBox(
-                height: 25,
-              ),
-              TextFormField(
-                controller: valueController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: "Valor da Receita",
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.add_chart),
-                ),
-              ),
-              const SizedBox(
-                height: 75,
-              ),
-              Container(
-                height: 60,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  gradient: const LinearGradient(colors: [Colors.blue, Colors.green]),
-                ),
-                child: MaterialButton(
-                  onPressed: (){
-                    if (descController.text.isNotEmpty && valueController.text.isNotEmpty) {
-                      addMoney(descController.text, valueController.text);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const DashboardScreen()),
-                      );
-                    }
-                  },
-                  child: const Text(
-                    "Confirmar",
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w300,
-                      color: Colors.white,
-                    ),
+              child: MaterialButton(
+                onPressed: () {
+                  if (descController.text.isNotEmpty &&
+                      valueController.text.isNotEmpty) {
+                    cadastrarReceita();
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DashboardScreen()),
+                    );
+                  }
+                },
+                child: const Text(
+                  "Confirmar",
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.white,
                   ),
                 ),
               ),
-            ]
+            ),
+          ]),
         ),
       ),
-    ),
     );
+  }
+
+  void cadastrarReceita() async {
+    String? uid = user?.uid;
+
+    var collection = FirebaseFirestore.instance.collection('users');
+    var docSnapshot = await collection.doc(uid).get();
+    Map<String, dynamic>? data = docSnapshot.data();
+
+    String balanceAcc = data!['balance'].toString();
+    String receitaAcc = data!['receita'].toString();
+
+    double balanceDouble = double.parse(balanceAcc);
+    double receitaDouble = double.parse(receitaAcc);
+    double addReceita = double.parse(valueController.text);
+
+    double novoValor = balanceDouble + addReceita;
+    double novaReceita = receitaDouble + addReceita;
+
+    Map<String, Object?> updateBalance = {'balance': novoValor};
+    Map<String, Object?> updateReceita = {'receita': novaReceita};
+
+    collection.doc(uid).update(updateBalance);
+    collection.doc(uid).update(updateReceita);
   }
 }

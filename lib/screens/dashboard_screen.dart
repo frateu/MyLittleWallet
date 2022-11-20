@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:mylittlewallet/data/globals.dart' as globals;
+
+import 'package:mylittlewallet/screens/login_screen.dart';
 import 'package:mylittlewallet/screens/receita_screen.dart';
 import 'package:mylittlewallet/screens/despesa_screen.dart';
 import 'package:mylittlewallet/screens/detail_screen.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -14,12 +18,39 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  final user = FirebaseAuth.instance.currentUser;
 
-  var moneyController = TextEditingController();
+  String allMoney = '0.0';
+  String receitaValue = '0.0';
+  String despesaValue = '0.0';
 
-  String allMoney      = globals.allMoney.toString();
-  String receitaValue  = globals.allReceita.toString();
-  String despesaValue  = globals.allDespesa.toString();
+  Color corSaldo = Colors.black;
+
+  Future getBalance() async {
+    String? uid = user?.uid;
+
+    var collection = FirebaseFirestore.instance.collection('users');
+    var docSnapshot = await collection.doc(uid).get();
+    Map<String, dynamic>? data = docSnapshot.data();
+
+    String balanceAcc = data!['balance'].toString();
+
+    if (double.parse(balanceAcc) >= 0) {
+      setState(() {
+        allMoney = data['balance'].toString();
+        receitaValue = data['receita'].toString();
+        despesaValue = data['despesa'].toString();
+        corSaldo = Colors.green;
+      });
+    } else {
+      setState(() {
+        allMoney = data['balance'].toString();
+        receitaValue = data['receita'].toString();
+        despesaValue = data['despesa'].toString();
+        corSaldo = Colors.red;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,53 +63,82 @@ class _DashboardScreenState extends State<DashboardScreen> {
             fontWeight: FontWeight.w300,
             color: Colors.black,
           ),
-        ),centerTitle: true,
+        ),
+        centerTitle: true,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            singOut();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LoginScreen(),
+              ),
+            );
+          },
           icon: const Icon(
-            Icons.account_balance_wallet,
+            Icons.exit_to_app,
             size: 45,
             color: Colors.black,
           ),
+          alignment: Alignment.centerRight,
         ),
       ),
-      body:
-      Container(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(30),
-        alignment: Alignment.center,
         child: Column(
           children: [
-            const SizedBox(
-              height: 15,
-            ),
-            const Text(
-              "Saldo Atual",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.w300,
-                color: Colors.teal,
+            Container(
+              height: 150,
+              width: 300,
+              decoration: BoxDecoration(
+                color: corSaldo,
+                borderRadius: BorderRadius.circular(10),
               ),
-            ),
-            Text(
-              "R\$$allMoney",
-              style: const TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.w300,
-                color: Colors.teal,
+              child: Column(
+                children: [
+                  // SizedBox como espaço
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  const Text(
+                    "Saldo Atual",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.white,
+                    ),
+                  ),
+                  // SizedBox como espaço
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Expanded(
+                    child: FutureBuilder(
+                        future: getBalance(),
+                        builder: (context, snapshot) {
+                          return Text(
+                            "R\$$allMoney",
+                            style: const TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.white,
+                            ),
+                          );
+                        }),
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(
-              height: 50,
             ),
             Container(
               padding: const EdgeInsets.all(50.0),
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
               child: Column(
                 children: [
                   Text(
                     "Receita: R\$$receitaValue",
                     style: const TextStyle(
-                      fontSize: 30,
+                      fontSize: 25,
                       fontWeight: FontWeight.w300,
                       color: Colors.green,
                     ),
@@ -93,22 +153,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ),
                       );
                     },
-                    icon: const Icon(
-                        Icons.account_tree,
-                        size: 18
-                    ),
-                    label: Text("Detalhes"),
+                    icon: const Icon(Icons.account_tree, size: 18),
+                    label: const Text("Detalhes"),
                     style: const ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.green)
-                    ),
+                        backgroundColor:
+                            MaterialStatePropertyAll<Color>(Colors.green)),
                   ),
+                  // SizedBox como espaço
                   const SizedBox(
-                    height: 40,
+                    height: 25,
                   ),
                   Text(
                     "Despesa: R\$$despesaValue",
                     style: const TextStyle(
-                      fontSize: 30,
+                      fontSize: 25,
                       fontWeight: FontWeight.w300,
                       color: Colors.red,
                     ),
@@ -123,17 +181,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ),
                       );
                     },
-                    icon: const Icon(
-                        Icons.account_tree,
-                        size: 18
-                    ),
-                    label: Text("Detalhes"),
+                    icon: const Icon(Icons.account_tree, size: 18),
+                    label: const Text("Detalhes"),
                     style: const ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.red)
-                    ),
+                        backgroundColor:
+                            MaterialStatePropertyAll<Color>(Colors.red)),
                   ),
+                  // SizedBox como espaço
                   const SizedBox(
-                    height: 30,
+                    height: 10,
                   ),
                 ],
               ),
@@ -150,17 +206,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const ReceitaScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => ReceitaScreen()),
                       );
                     },
-                    icon: const Icon(
-                        Icons.add_circle,
-                        size: 18
-                    ),
-                    label: Text("Receita"),
+                    icon: const Icon(Icons.add_circle, size: 18),
+                    label: const Text("Receita"),
                     style: const ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.green)
-                    ),
+                        backgroundColor:
+                            MaterialStatePropertyAll<Color>(Colors.green)),
                   ),
                   const SizedBox(
                     width: 40,
@@ -169,17 +223,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const DespesaScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => const DespesaScreen()),
                       );
                     },
-                    icon: const Icon(
-                        Icons.add_circle,
-                        size: 18
-                    ),
-                    label: Text("Despesa"),
+                    icon: const Icon(Icons.add_circle, size: 18),
+                    label: const Text("Despesa"),
                     style: const ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll<Color>(Colors.red)
-                    ),
+                        backgroundColor:
+                            MaterialStatePropertyAll<Color>(Colors.red)),
                   ),
                 ],
               ),
@@ -188,5 +240,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       ),
     );
+  }
+
+  Future singOut() async {
+    await FirebaseAuth.instance.signOut();
   }
 }
