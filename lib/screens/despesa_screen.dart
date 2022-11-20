@@ -133,8 +133,8 @@ class _DespesaScreenState extends State<DespesaScreen> {
     double novaDespesa = despesaDouble + addDespesa;
 
     Map<String, Object?> updateAcc = {
-      'balance': novoValor.round(),
-      'despesa': novaDespesa.round()
+      'balance': novoValor,
+      'despesa': novaDespesa
     };
 
     collectionUsers.doc(uid).update(updateAcc);

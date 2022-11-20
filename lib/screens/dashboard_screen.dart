@@ -33,20 +33,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
     var docSnapshot = await collection.doc(uid).get();
     Map<String, dynamic>? data = docSnapshot.data();
 
-    String balanceAcc = data!['balance'].toString();
+    String balanceAcc = data!['balance'].toStringAsFixed(2);
 
     if (double.parse(balanceAcc) >= 0) {
       setState(() {
-        allMoney = data['balance'].toString();
-        receitaValue = data['receita'].toString();
-        despesaValue = data['despesa'].toString();
+        allMoney = data['balance'].toStringAsFixed(2);
+        receitaValue = data['receita'].toStringAsFixed(2);
+        despesaValue = data['despesa'].toStringAsFixed(2);
         corSaldo = Colors.green;
       });
     } else {
       setState(() {
-        allMoney = data['balance'].toString();
-        receitaValue = data['receita'].toString();
-        despesaValue = data['despesa'].toString();
+        allMoney = data['balance'].toStringAsFixed(2);
+        receitaValue = data['receita'].toStringAsFixed(2);
+        despesaValue = data['despesa'].toStringAsFixed(2);
         corSaldo = Colors.red;
       });
     }

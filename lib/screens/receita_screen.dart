@@ -133,8 +133,8 @@ class _ReceitaScreenState extends State<ReceitaScreen> {
     double novaReceita = receitaDouble + addReceita;
 
     Map<String, Object?> updateAcc = {
-      'balance': novoValor.round(),
-      'receita': novaReceita.round()
+      'balance': novoValor,
+      'receita': novaReceita
     };
 
     collectionUsers.doc(uid).update(updateAcc);
