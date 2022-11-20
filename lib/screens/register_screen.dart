@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mylittlewallet/screens/login_screen.dart';
+import 'package:mylittlewallet/screens/message_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -83,12 +83,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   child: MaterialButton(
                     onPressed: () {
-                      singUp();
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => const LoginScreen()));
+                      if (passwordController.text.length >= 6) {
+                        singUp();
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const MessageScreen()));
+                      } else {
+                        AlertDialog(
+                          title: const Text('Senha Invalida'),
+                          content: SingleChildScrollView(
+                            child: ListBody(
+                              children: const <Widget>[
+                                Text(
+                                    'A senha deve conter mais de 6 caracteres.'),
+                              ],
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('Voltar'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      }
                     },
                     child: const Text(
-                      "REGISTER",
+                      "REGISTRAR",
                       style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.w300,
@@ -105,8 +127,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Future singUp() async {
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+  void singUp() {
+    FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: emailController.text.trim(),
       password: passwordController.text.trim(),
     );

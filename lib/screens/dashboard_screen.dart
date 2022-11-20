@@ -88,7 +88,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
         child: Column(
           children: [
             Container(
-              // cor para teste, será aplicada variavel com coloração a partir do saldo
               height: 150,
               width: 300,
               decoration: BoxDecoration(
