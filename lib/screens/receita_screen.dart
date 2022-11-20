@@ -91,11 +91,11 @@ class _ReceitaScreenState extends State<ReceitaScreen> {
                   if (descController.text.isNotEmpty &&
                       valueController.text.isNotEmpty) {
                     cadastrarReceita();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DashboardScreen()),
-                    );
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context){
+                      return const DashboardScreen();
+                    }), (r){
+                      return false;
+                    });
                   }
                 },
                 child: const Text(
@@ -117,8 +117,9 @@ class _ReceitaScreenState extends State<ReceitaScreen> {
   void cadastrarReceita() async {
     String? uid = user?.uid;
 
-    var collection = FirebaseFirestore.instance.collection('users');
-    var docSnapshot = await collection.doc(uid).get();
+    // adicionar balanço da conta
+    var collectionUsers = FirebaseFirestore.instance.collection('users');
+    var docSnapshot = await collectionUsers.doc(uid).get();
     Map<String, dynamic>? data = docSnapshot.data();
 
     String balanceAcc = data!['balance'].toString();
@@ -131,10 +132,23 @@ class _ReceitaScreenState extends State<ReceitaScreen> {
     double novoValor = balanceDouble + addReceita;
     double novaReceita = receitaDouble + addReceita;
 
-    Map<String, Object?> updateBalance = {'balance': novoValor};
-    Map<String, Object?> updateReceita = {'receita': novaReceita};
+    Map<String, Object?> updateAcc = {
+      'balance': novoValor,
+      'receita': novaReceita
+    };
 
-    collection.doc(uid).update(updateBalance);
-    collection.doc(uid).update(updateReceita);
+    collectionUsers.doc(uid).update(updateAcc);
+
+    // adicionar lancamentos
+    var collectionLancamentos = FirebaseFirestore.instance.collection('lancamentos');
+
+    Map<String, Object?> addLancamento = {
+      'descricao': descController.text,
+      'id_usuario': uid,
+      'tipo_lancamento': 'receita',
+      'valor': valueController.text
+    };
+
+    collectionLancamentos.add(addLancamento);
   }
 }

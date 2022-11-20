@@ -74,14 +74,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 5,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                        onPressed: () {},
-                        child: const Text("Esqueceu a Senha?"))
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [
+                //     TextButton(
+                //         onPressed: () {},
+                //         child: const Text("Esqueceu a Senha?"))
+                //   ],
+                // ),
                 const SizedBox(
                   height: 25,
                 ),
